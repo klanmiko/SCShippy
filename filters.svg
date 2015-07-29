@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+   <filter id="f1">
+     <feGaussianBlur stdDeviation="2" />
+    <feComponentTransfer>
+        <feFuncR type="linear" slope="0.3"/>
+        <feFuncG type="linear" slope="0.3"/>
+        <feFuncB type="linear" slope="0.3"/>
+    </feComponentTransfer>
+   </filter>
+</defs>
+</svg>

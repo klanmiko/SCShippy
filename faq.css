@@ -1,0 +1,15 @@
+h1 {
+    font-weight:400;
+    font-family: "Roboto",serif;
+}
+.question:before{
+    content:"Q: ";
+}
+.text{
+    font-family:"Times New Roman",serif;
+    font-size:24px;
+    font-weight: 300;
+}
+.text:before{
+    content:"A: ";
+}

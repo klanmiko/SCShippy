@@ -1,0 +1,162 @@
+body{
+    margin: 0;
+}
+hr{ 
+    border: 0; height: 1px; background: #333; 
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image: -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image: -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image: -o-linear-gradient(left, #ccc, #333, #ccc); 
+}
+#content {
+    width: 70%;
+    height: 1000px;
+    width: calc(100%-80px);
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    /* IE10 Consumer Preview  
+    background-image: -ms-linear-gradient(bottom, #191919 0%, #3B3B3B 100%);
+
+/* Mozilla Firefox 
+    background-image: -moz-linear-gradient(bottom, #191919 0%, #3B3B3B 100%);
+
+/* Opera 
+background-image: -o-linear-gradient(bottom, #191919 0%, #3B3B3B 100%);
+
+/* Webkit (Safari/Chrome 10) 
+background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #191919), color-stop(1, #3B3B3B));
+
+/* Webkit (Chrome 11+) 
+background-image: -webkit-linear-gradient(bottom, #191919 0%, #3B3B3B 100%);
+
+/* W3C Markup, IE10 Release Preview 
+background-image: linear-gradient(to top, #191919 0%, #3B3B3B 100%);
+    */
+    display: block;
+}
+h1{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+}
+h2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+}
+.centeredtext {
+    text-align: center;
+}
+
+#submittext {
+    font-size: 48px;
+}
+
+
+
+#genderdiv {
+    display:block;
+    transition: all;
+    transition-duration: 0.2s;
+    -webkit-transition: all;
+    -webkit-transition-duration: 0.2s;
+}
+
+
+.content {
+}
+
+form {
+    width:100%;
+    margin: 0 auto;
+}
+
+#onediv {
+}
+
+#couplediv {
+}
+
+#filediv {
+}
+
+#imagepreviewdiv {
+}
+
+#nameform {
+}
+
+#buttons {
+}
+
+#tab2 {
+    display:none;
+}
+
+#tab1 {
+    display:none;
+}
+
+#selector {
+    margin-top:20px;
+    display:flex;
+    display:-webkit-flex;
+    justify-content: center;
+    -webkit-justify-content:center;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+}
+
+#container {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#nametoggle {
+    float:left;
+}
+
+#edittoggle {
+    float:right;
+}
+
+#innernav {
+    
+}
+
+#edit {
+    display:none;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    align-items: center;
+    -webkit-align-items:center;
+    margin: 20px;
+}
+
+.green-button {
+    margin-left:auto;
+    margin-right: 0;
+    background: #53E475;
+}
+
+.add {
+    display:none;
+}
+
+.innertable {
+    width:100%;
+}
+
+.secondrow {
+    text-align: right;
+}
+
+.right-floater {
+    float:right;
+}
+
+.purple-thing {
+    background-color:#964EDE;
+}

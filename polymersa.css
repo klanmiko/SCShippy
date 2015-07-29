@@ -1,0 +1,90 @@
+body{
+    margin: 0px;
+}
+poly-element {
+    margin: 3px;
+    margin-top: 20px;
+    margin-left: 20px;
+    display:block
+}
+footer {
+    height:auto;
+    padding:20px;
+    text-align: center;
+    display: block;
+    background-color: #3366FF;
+    font-size: 24px;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+}
+#mainholder {
+    background-color: #000000;
+    height:130vh;
+    min-height:500px;
+    width:inherit;
+    display: block;
+}
+.maintext {
+    color: #FFFFFF;
+    left: auto;
+    right: auto;
+    top: 400px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+#focusbuttonplacer {
+    height: 500px;
+    top:60px;
+    position:absolute;
+    left: 20%;
+    right: 20%;
+    display :block;
+}
+#bruins {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    max-height:400px;
+    max-width: 400px;
+    margin-bottom: 100px;
+    margin-top: 50px;
+    display : flex;
+    display: -webkit-flex;
+}
+#bruins:hover {
+    margin-left: auto;
+    margin-right: auto;
+    transform: scale(1.2,1.2);
+    transition-duration: 0.3s;
+    -webkit-transform: scale(1.2,1.2);
+    -webkit-transition-duration: 0.3s;
+    margin-bottom:  100px;
+    margin-top: 50px;
+    display : flex;
+    display: -webkit-flex;
+    filter:none;
+    cursor:pointer;
+}
+#mosaic {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0px;
+    filter: url(filters.svg#f1);
+    filter: blur(2px) brightness(30%);
+    -webkit-filter: blur(2px) brightness(30%);
+    -ms-filter: blur(2px) brightness(30%);
+    display:block;
+}
+@media (max-width:449px)
+{
+    footer{
+        font-size:14px;
+    }
+}
+@media (max-width:599px)
+{
+    .maintext{
+        font-size: 16px;
+    }
+}

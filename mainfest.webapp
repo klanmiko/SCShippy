@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "name": "SCShippy",
+  "description": "Very Gut App for finding couples",
+  "launch_path": "/shippy/polymera.html",
+  "icons": {
+    "128": "/shippy/images/icon128x128.png"
+  },
+  "developer": {
+    "name": "Kaelan Mikowicz"
+  },
+  "type": "web",
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en"
+}

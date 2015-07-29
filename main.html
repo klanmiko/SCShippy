@@ -1,0 +1,250 @@
+<html>
+    <body>
+        <head>
+             <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,300' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+            <Title>SCShippy</Title>
+            <script src="bower_components/jquery/dist/jquery.min.js"></script>
+            <script>
+                var end = 5;
+                $(function(){
+                    var x = $("#content").width()*20/100;
+                    $("#spacer").width(x);
+                    $.ajax({
+                        type:"GET",
+                        url:"scripts/rankings.php",
+                        data:{rangestart:(end-4),rangeend:end}
+                    }).done(populate);
+                });
+                function populate(json) {
+                    var content = document.getElementById("content");
+                    var loadmore = document.getElementById("loadmore");
+                    loadmore.style.display="none";
+                    if(json=="0 results")
+                    {
+                        var emptysorry = document.getElementById("emptysorry");
+                        emptysorry.style.display="block";
+                        return;
+                    }
+                    if(json.length>0)
+                    {
+                        if(json.length>=5)
+                        {
+                            loadmore.style.display="flex";
+                        }
+                        for(var i=0;i<json.length;i++)
+                        {
+                            var entry = document.createElement("div");
+                            entry.className = "entry";
+                            entry.id = i;
+                            var nocell = document.createElement("div");
+                            nocell.className="nocell";
+                            nocell.id=i;
+                            entry.appendChild(nocell);
+                            var no = document.createElement("h1");
+                            no.className="no";
+                            no.id=i;
+                            if(i==0&&end<6)
+                                no.innerHTML="1st";
+                            else if(i==1&&end<6)
+                                no.innerHTML="2nd";
+                            else if(i==2&&end<6)
+                                no.innerHTML="3rd";
+                            else if(i>2&&end<6)
+                                no.innerHTML=(i+1)+"th";
+                            else{
+                                no.innerHTML=(end-5+i+1)+"th";
+                            }
+                            nocell.appendChild(no);
+                            var imagetable=document.createElement("div");
+                            imagetable.className="imagetable";
+                            imagetable.id=i;
+                            entry.appendChild(imagetable);
+                            var imagecolumn=document.createElement("div");
+                            imagecolumn.className="imagecolumn";
+                            imagecolumn.id=i;
+                            imagetable.appendChild(imagecolumn);
+                            var imagerow=document.createElement("div");
+                            imagerow.className="imagerow";
+                            imagerow.id=i;
+                            imagecolumn.appendChild(imagerow);
+                            if(json[i].both==1)
+                            {
+                                var imagelarge =document.createElement("div");
+                                imagelarge.className="imagelarge";
+                                imagelarge.id=i;
+                                var roundedrect=document.createElement("img");
+                                roundedrect.className="roundedrect";
+                                roundedrect.id=i;
+                                roundedrect.src = json[i].photo;
+                                imagelarge.appendChild(roundedrect);
+                                imagerow.appendChild(imagelarge);
+                            }
+                            else if(json[i].both==0)
+                            {
+                                var centertd=document.createElement("div");
+                                centertd.className="centertd";
+                                centertd.id=i;
+                                imagerow.appendChild(centertd);
+                                var centering = document.createElement("div");
+                                centering.className="centering";
+                                centering.id=i;
+                                centertd.appendChild(centering);
+                                var imageboy = document.createElement("div");
+                                imageboy.className="imageboy";
+                                imageboy.id=i;
+                                centering.appendChild(imageboy);
+                                var boy = document.createElement("img");
+                                boy.className="roundedrect";
+                                boy.id=i;
+                                boy.src=json[i].boy;
+                                imageboy.appendChild(boy);
+                                var spacing = document.createElement("div");
+                                spacing.className="spacing";
+                                spacing.id=i;
+                                centering.appendChild(spacing);
+                                var imagegirl=document.createElement("div");
+                                imagegirl.className="imagegirl";
+                                imagegirl.id=i;
+                                centering.appendChild(imagegirl);
+                                var girl = document.createElement("img");
+                                girl.className="roundedrect";
+                                girl.id=i;
+                                girl.src=json[i].girl;
+                                imagegirl.appendChild(girl);
+                            }
+                            var namerow = document.createElement("div");
+                            namerow.className="namerow";
+                            namerow.id=i;
+                            imagecolumn.appendChild(namerow);
+                            var name = document.createElement("div");
+                            name.className="name";
+                            name.id=i;
+                            namerow.appendChild(name);
+                            var nametext = document.createElement("h1");
+                            nametext.className="nametext";
+                            nametext.id=i;
+                            nametext.innerHTML=json[i].name;
+                            name.appendChild(nametext);
+                            var voterow = document.createElement("div");
+                            voterow.className="voterow";
+                            voterow.id=i;
+                            imagecolumn.appendChild(voterow);
+                            var voteno = document.createElement("h1");
+                            voteno.className="voteno";
+                            voteno.id=i;
+                            voteno.innerHTML="Votes: "+json[i].score;
+                            voterow.appendChild(voteno);
+                            var livecontent=document.getElementById("livecontent");
+                            livecontent.appendChild(entry);
+                            //var hr = document.createElement("hr");
+                            //content.appendChild(hr);
+                        }
+                    }
+                    else{
+                        var emptysorry = document.getElementById("emptysorry");
+                        emptysorry.style.display="block";
+                    }
+                }
+                function loadmore() {
+                    end += 5;
+                    $.ajax({
+                        type:"GET",
+                        url:"scripts/rankings.php",
+                        data:{rangestart:(end-4),rangeend:end}
+                    }).done(populate);
+                }
+            </script>
+        </head>
+        <header> 
+            <div id="linecontainer">
+                    <div class="headerbutton" id="this" onclick="location.href='main.html'">
+                        <p>Home</p>
+                    </div>
+                    <div class="headerbutton" onclick="location.href='about.html'">
+                        <p>About</p>
+                    </div>
+                    <div class="headerbutton" onclick="location.href='faq.html'">
+                        <p>FAQ</p>
+                    </div>
+                </div>
+                <div id="shippy">
+                    <h1 id = "shippytext">SCShippy</h1>
+                </div>
+        <!--<div id="socialcontainer">
+            <button class="socialbutton">some social button</button>
+        </div>-->
+        </header>
+        <div id="content">
+            <div id="actioncontainer">
+                <div id="votebox">
+                    <button id="vote" onclick="location.href='vote.html'"></button>
+                    <h1 id="votedesc" class="label" id="s">Ship a couple</h1>         
+                </div>
+                <div id="spacer"></div>
+                <div id="shipbox">
+                    <button id="ship" onclick="location.href='name.html'"></button>
+                    <h1 id="shipdesc" class="label" id="v">Name a couple</h1>
+                </div>
+            </div>
+            <hr>
+            <h1 id="randings">Rankings</h1>
+            <div id="livecontent"></div>
+            <div id="loadmore">
+                <button class="flat-thing pure-button" id="boxcontainer" onclick="loadmore()">
+                    <i class="fa fa-refresh"></i>
+                    Load More
+                </button>
+            </div>
+            <div id="emptysorry">
+                <p id="centerthisthing">Sorry, no submissions yet. Why not go and Name a Couple?</p>
+            </div>
+            <!-------
+            <div id="livecontent">
+                <div class="entry">
+                <div class="nocell">
+                    <h1 class="no"></h1>
+                </div>
+                <div class="imagetable">
+                    <div class="imagecolumn">
+                        <div class="imagerow">
+                            <div class="imagelarge">
+                                <img class="roundedrect">
+                            </div>
+                            <div class="centertd">
+                                <div class="centering">
+                                    <div class="imageboy">
+                                        <img class="roundedrect">
+                                    </div>
+                                    <div class="spacing"></div>
+                                    <div class="imagegirl">
+                                        <img class="roundedrect">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="namerow">
+                            <div class="name">
+                                <h1 class="nametext"></h1>
+                            </div>
+                        </div>
+                        <div class="voterow">
+                            <div class="sumspace"></div>
+                            <h1 class="voteno"></h1>
+                            <div class="spacingtext"></div>
+                            <h1 class="votes"></h1>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+-->
+        </div>
+    </body>
+</html>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="header.css">

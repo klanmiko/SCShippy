@@ -1,0 +1,177 @@
+<html>
+    <body onload="load()">
+        <head>
+             <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,300' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+            <Title>Vote</Title>
+            <script src="scripts/vote.js"></script>
+            <script src="scripts/MAKESCTracker.js">//Tracking Code</script>
+            <script src="bower_components/jquery/dist/jquery.min.js"></script>
+            <script>
+                var attempt = 0;
+                var data;
+                var name = "";
+                function load() {
+                    attempt = attempt + 1;
+                    var contentdiv = document.getElementById("content");
+                    contentdiv.style.visibility="hidden";
+                    $.ajax({
+                        type: "GET",
+                        url: "scripts/votingget.php",
+                        data: { tries: attempt}
+                    })
+                    .done(voteget);
+                }
+                function vote(cast) {
+                    var error = document.getElementById("error");
+                    var errortext = document.getElementById("errortext");
+                    error.style.display="none";
+                    if(name=="")
+                    {
+                        name = document.getElementById("gibname").value;
+                        if(name=="")
+                        {   
+                            errortext.innerHTML="You need to name this couple before you can proceed";
+                            error.style.display="block";
+                            return;
+                        }
+                    }
+                    if(cast=="ship")
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "scripts/votingpost.php",
+                            data: { ID:data.ID, vote:"ship", name:name}
+                        });
+                    }
+                    else if(cast == "sink")
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "scripts/votingpost.php",
+                            data: { ID:data.ID, vote:"sink", name:name}
+                        });
+                    }
+                    load();
+                }
+                function voteget(json) {
+                    if(json.Both===undefined)
+                    {
+                        var nothing = document.getElementById("nothingtext");
+                        nothing.style.display="block";
+                        return;
+                    }
+                    name = "";
+                    var text = document.getElementById("thattext");
+                    text.style.display="none";
+                    "use strict";
+                    data = json;
+                    var inputtext = document.getElementById("gibname");
+                    inputtext.style.display="none";
+                    //var buttons = document.getElementsByClassName("buttons");
+                    var contentdiv = document.getElementById("content");
+                    contentdiv.style.visibility="visible";
+                    /*for(var i=0;i<buttons.length;i++)
+                    {
+                        buttons[i].style.display="block";
+                    }*/
+                    var photocontainer = document.getElementById("photocontainer");
+                    var doublecontainer = document.getElementById("doublecontainer");
+                    doublecontainer.style.display = "none";
+                    photocontainer.style.display = "none";
+                    if(json.Both==1)
+                    {
+                        
+                        photocontainer.style.display = "block";
+                        var couple = document.getElementById("couple");
+                        couple.src = json.Photo;
+                    }
+                    else if(json.Both==0)
+                    {
+                        doublecontainer.style.display = "block";
+                        var boy = document.getElementById("boy");
+                        var girl = document.getElementById("girl");
+                        boy.src = json.Boy;
+                        girl.src = json.Girl;
+                    }
+                    if(json.Names===undefined)
+                    {
+                        inputtext.style.display="inline-block";
+                    }
+                    else{
+                        var index = Math.floor(Math.random()*(json.Names.length-1));
+                        var text = document.getElementById("thattext");
+                        name = json.Names[index];
+                        text.innerHTML=name;  
+                        text.style.display="inline-block";
+                    }
+                }
+            </script>
+        </head>
+       <header> 
+            <div id="linecontainer">
+                    <div class="headerbutton" id="this" onclick="location.href='main.html'">
+                        <p>Home</p>
+                    </div>
+                    <div class="headerbutton" onclick="location.href='about.html'">
+                        <p>About</p>
+                    </div>
+                    <div class="headerbutton" onclick="location.href='faq.html'">
+                        <p>FAQ</p>
+                    </div>
+                </div>
+                <div id="shippy">
+                    <h1 id = "shippytext">SCShippy</h1>
+                </div>
+        <!--<div id="socialcontainer">
+            <button class="socialbutton">some social button</button>
+        </div>-->
+        </header>
+         <div id="error">
+                <p id="errortext">hi</p>
+            </div>
+        <div id="content"> 
+            <div id="dynamic">
+                <div id="photocontainer">
+                    <img id="couple">
+                </div>
+                <div id="doublecontainer">
+                    <div id="boydiv" class="indivdiv">
+                        <img class="person" id="boy">
+                    </div>
+                    <div id="comparator"></div>
+                    <div id="girldiv" class="indivdiv">
+                        <img class="person" id="girl">
+                    </div>
+                </div>
+                <div id="fancytext">
+                    <input type="text" name="gibname" id="gibname">
+                    <h1 id="thattext">Text</h1>
+                </div>
+            </div>
+            <div id="actioncontainer">
+                <div id="topline">
+                    <div class="buttons" id="ship" onclick="vote('ship')">
+                        <img class = "buticon" src = "images/ship.png">
+                        <h1 class="label">Ship</h1>
+                    </div>
+                    <div class="buttons" id="skip" onclick="load()">
+                        <img class="buticon" src = "images/1420540614_next.png">
+                        <h1 class="label">Skip</h1>
+                    </div>
+                </div> 
+                <div class="buttons" id="sink" onclick="vote('sink')">
+                    <img class="buticon" src = "images/bruinsevil.svg">
+                    <h1 class="label">Sink</h1>
+                </div>
+            </div>
+        </div>
+        <div id="nothingtext">
+                <p id="centerthisthing">Sorry, no submissions yet. Why not go and Name a Couple?</p>
+        </div>
+    </body>
+</html>
+<link rel="stylesheet" href="vote.css">
+<link rel="stylesheet" href="header.css">

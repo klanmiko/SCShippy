@@ -1,0 +1,19 @@
+h1 {
+    font-weight:400;
+}
+
+.text {
+    font-size: 16px;
+    font-family: "Times New Roman",serif;
+    margin-left: 10px;
+    display:block;
+}
+
+#content {
+    width:80%;
+    display: flex;
+}
+
+#textblock {
+    width:40em
+}

@@ -1,0 +1,275 @@
+<html>    
+    <body>
+        <head>
+             <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,300' rel='stylesheet' type='text/css'>
+            <link href='http://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+            <Title>SCShippy</Title>
+            <script type="text/javascript" src="scripts/analyticsa.js"></script>
+            <script type="text/javascript" src="scripts/assfile.js"></script>
+            <script src="bower_components/jquery/dist/jquery.min.js"></script>            
+            <script type="text/javascript" src="scripts/checkban.js"></script>
+            <script>
+                var loaded=false;
+                $(function(){
+                    var genderdiv = document.getElementById("genderdiv");
+                    $("input[name='number']").click(function() {
+                        if($(this).val()=="one")
+                        {
+                            $("#genderdiv").show();
+                        }
+                        else if($(this).val()=="both")
+                        {
+                            $("#genderdiv").hide();
+                        }
+                    });
+                    $("#nametoggle").click(function() {
+                        
+                        $("#content").show();
+                        $("#edit").hide();
+                        if(!$(this).hasClass("pure-menu-selected"))
+                        {
+                            $(this).toggleClass("pure-menu-selected");
+                            $("#edittoggle").toggleClass("pure-menu-selected");
+                        }
+                    });
+                    $("#edittoggle").click(function() {
+                        var insert = document.getElementById("thebody");
+                        if(!loaded)
+                        {
+                            $.ajax({
+                            url:"scripts/getnames.php",
+                            type:"GET"
+                            }).done(function (data){
+                                if(data=="0 results")
+                                {
+                                }
+                                else{
+                                    if(data.length>0)
+                                    {
+                                        for(var i=0;i<data.length;i++)
+                                        {
+                                            var submitbutton = document.createElement("button");
+                                            submitbutton.setAttribute('type','submit');
+                                            submitbutton.setAttribute('form',data[i].ID);
+                                            submitbutton.className="pure-button pure-button-primary";
+                                            submitbutton.innerHTML="Submit";
+                                            var td1 = document.createElement("td");
+                                            td1.appendChild(submitbutton);
+                                            var textinput = document.createElement("input");
+                                            textinput.setAttribute('type','text');
+                                            textinput.setAttribute('name','newname');
+                                            textinput.required=true;
+                                            var hiddeninput = document.createElement("input");
+                                            hiddeninput.setAttribute('type','hidden');
+                                            hiddeninput.setAttribute('name','coupleid');
+                                            hiddeninput.setAttribute('value',data[i].ID);
+                                            var form = document.createElement("form");
+                                            form.className="pure-form";
+                                            form.setAttribute('action','scripts/addname.php');
+                                            form.setAttribute('method','post');
+                                            form.setAttribute('id',data[i].ID);
+                                            form.appendChild(textinput);
+                                            form.appendChild(hiddeninput);
+                                            var td2 = document.createElement("td");
+                                            td2.appendChild(form);
+                                            var add = document.createElement("tr");
+                                            add.className="add";
+                                            add.appendChild(td2);
+                                            add.appendChild(td1);
+                                            var icon = document.createElement("i");
+                                            icon.className="fa fa-plus";
+                                            var plus = document.createElement("button");
+                                            plus.className="green-button pure-button";
+                                            plus.appendChild(icon);
+                                            var buttoncell = document.createElement("td");
+                                            buttoncell.className="right-floater";
+                                            buttoncell.appendChild(plus);
+                                            var name1 = document.createElement("td");
+                                            name1.innerHTML=data[i].name[0];
+                                            var therowtorulethemall = document.createElement("tr");
+                                            therowtorulethemall.appendChild(name1);
+                                            therowtorulethemall.appendChild(buttoncell);
+                                            var colgroup = document.createElement("colgroup");
+                                            var col1 = document.createElement("col");
+                                            var col2 = document.createElement("col");
+                                            col2.className="secondrow";
+                                            colgroup.appendChild(col1);
+                                            colgroup.appendChild(col2);
+                                            var maintable = document.createElement("table");
+                                            maintable.className="innertable";
+                                            maintable.appendChild(colgroup);
+                                            maintable.appendChild(therowtorulethemall);
+                                            for(var j=1;j<data[i].name.length;j++)
+                                            {
+                                                var namecell = document.createElement("td");
+                                                namecell.innerHTML=data[i].name[j];
+                                                var namerow = document.createElement("tr");
+                                                namerow.appendChild(namecell);
+                                                maintable.appendChild(namerow);
+                                            }
+                                            maintable.appendChild(add);
+                                            var td3 = document.createElement("td");
+                                            td3.appendChild(maintable);
+                                            var boycell = document.createElement("td");
+                                            var girlcell = document.createElement("td");
+                                            boycell.innerHTML=data[i].boy;
+                                            girlcell.innerHTML=data[i].girl;
+                                            var bigrow = document.createElement("tr");
+                                            bigrow.appendChild(boycell);
+                                            bigrow.appendChild(girlcell);
+                                            bigrow.appendChild(td3);
+                                            insert.appendChild(bigrow);
+                                        }
+                                    }
+                                    loaded=true;
+                                    $(".green-button").click(function(){
+                                        $(this).parent().parent().parent().children(".add").toggle(500);
+                                    });
+                                }
+                            });
+                        }
+                        $("#content").hide();
+                        $("#edit").show();
+                        $("#edit").css("display","flex");
+                        if(!$(this).hasClass("pure-menu-selected"))
+                        {
+                            $(this).toggleClass("pure-menu-selected");
+                            $("#nametoggle").toggleClass("pure-menu-selected");
+                        }
+                });
+                    
+                });
+            </script>
+        </head>
+        <header> 
+            <div id="linecontainer">
+                    <div class="headerbutton" id="this" onclick="location.href='main.html'">
+                        <p>Home</p>
+                    </div>
+                    <div class="headerbutton" onclick="location.href='about.html'">
+                        <p>About</p>
+                    </div>
+                    <div class="headerbutton" onclick="location.href='faq.html'">
+                        <p>FAQ</p>
+                    </div>
+                </div>
+                <div id="shippy">
+                    <h1 id = "shippytext">SCShippy</h1>
+                </div>
+        <!--<div id="socialcontainer">
+            <button class="socialbutton">some social button</button>
+        </div>-->
+        </header>
+        <div id="container">
+            <div id = "selector" class="pure-menu pure-menu-open pure-menu-horizontal">
+                <ul id="innernav">
+                    <li id="nametoggle" class="pure-menu-selected"><a>Submission</a></li>
+                    <li id="edittoggle"><a>Edit</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div id="content">
+                <h1 class="centeredtext" id="submittext">Tell Us</h1>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="naming">
+                        <div class="content">
+                            <form id="mainform" class="pure-form pure-form-aligned" action="scripts/name.php" method="post" enctype="multipart/form-data">
+                                <fieldset id="numberdiv">
+                                    <div id="onediv" class="pure-control-group">
+                                        <label for="individualtab" class="pure-radio">Person</label>
+                                        <input type="radio" id="individualtab" value="one" name="number" checked>
+                                    </div>
+                                    <div id="couplediv" class="pure-control-group">
+                                        <label for="coupletab" class="pure-radio">Couple</label>
+                                        <input type="radio" id="coupletab" name="number" value="both">
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div id="nameform" class="pure-control-group">
+                                        <label for="namefield">Name</label>
+                                        <input type="text" id="namefield" name="namefield" required>
+                                    </div>
+                                </fieldset>
+
+                                <fieldset id="genderdiv">
+                                    <div id="boydiv" class="pure-control-group">
+                                        <label for="boytab" class="pure-radio">Boy</label>
+                                        <input type="radio" class="gendertab" id="boytab" value="boy" name="gender" required>
+                                    </div>
+                                    <div id="girldiv" class="pure-control-group">
+                                        <label for="girltab" class="pure-radio">Girl</label>
+                                        <input type="radio" class="gendertab" id="girltab" name="gender" value="girl">
+                                    </div>
+                                </fieldset>
+                                <div id="filediv" class="pure-control-group">
+                                    <label for="fileuser" class="pure-file">Photo</label>
+                                    <input type="file" id="fileuser" name="fileuser" required>
+                                </div>
+                                <div id="imagepreviewdiv">
+                                    <img id="previewimage">
+                                </div>
+                                <div id="buttons" class="pure-controls">
+                                    <input type="submit" value = "Submit" class="purple-thing pure-button pure-button-primary" name="submit">
+                                </div>
+
+                            </form>
+                        </div> 
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="tabling">
+                        <div class="content">
+                        </div> 
+                    </div>
+                </div>   
+            </div>
+            <div id="edit">
+                <table class="pure-table" id="thetable">
+                    <thead>
+                        <tr>
+                            <th>Boy</th>
+                            <th>Girl</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="thebody">
+                        <!-- <tr>
+                        <td>sampleboy</td>
+                        <td>samplegirl</td>
+                        <td>
+                            <table class="innertable">
+                                <col>
+                                <col class="secondrow">
+                                <tr>
+                                    <td>samplename</td>
+                                    <td class="right-floater">
+                                        <button class="green-button pure-button">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="add">
+                                    <td>
+                                        <form class="pure-form" action="scripts/addname.php" method="post">
+                                            <input type="text" name="newname" required>
+                                            <input type="hidden" name="coupleid" value="7">
+                                            <td>
+                                                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                                            </td>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<link rel="stylesheet" href="name.css">
+<link rel="stylesheet" href="header.css">
+
